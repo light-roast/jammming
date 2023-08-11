@@ -1,4 +1,5 @@
 import TrackList from '../TrackList/TrackList.jsx'
+import './Playlist.css'
 
 export default function Playlist() {
     return(
