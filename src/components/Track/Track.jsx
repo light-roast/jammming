@@ -1,4 +1,12 @@
 export default function Track() {
+    function renderAction() {
+        if (isRemoval) {
+            return <button className="TrackAction">-</button>
+        } else  {
+            return <button className="TrackAction">+</button>
+        }
+    }
+
 return (
     <div className="Track">
     <div className="Track-information">
