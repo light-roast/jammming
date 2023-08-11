@@ -1,4 +1,7 @@
-export default function Track() {
+import './Track.css'
+import PropTypes from 'prop-types';
+
+export default function Track(props) {
     function renderAction() {
         if (isRemoval) {
             return <button className="TrackAction">-</button>
@@ -10,10 +13,16 @@ export default function Track() {
 return (
     <div className="Track">
     <div className="Track-information">
-        {/* <h3><!-- track name will go here --></h3>
-        <p><!-- track artist will go here--> | <!-- track album will go here --></p> */}
+        <h3>{props.name}</h3>
+        <p>{props.artist} | {props.album}</p>
     </div>
     {/* <button className="Track-action"><!-- + or - will go here --></button> */}
     </div>
 )
 }
+
+Track.propTypes = {
+    name: PropTypes.string.isRequired,
+    artist: PropTypes.string.isRequired,
+    album: PropTypes.string.isRequired
+};
