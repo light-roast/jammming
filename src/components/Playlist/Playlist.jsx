@@ -2,16 +2,17 @@ import TrackList from '../TrackList/TrackList.jsx'
 import './Playlist.css'
 import PropTypes from 'prop-types'
 
-export default function Playlist({searchResults}) {
+export default function Playlist({playlistName, playlistTracks}) {
     return(
         <div className="Playlist">
-            <input defaultValue={'New Playlist'}/>
-            <TrackList searchResults={searchResults}/>
+            <input defaultValue={playlistName}/>
+            <TrackList tracks={playlistTracks}/>
             <button className="Playlist-save">SAVE TO SPOTIFY</button>
         </div>
     )
 }
 
 Playlist.propTypes = {
-    searchResults: PropTypes.array.isRequired
+    playlistName: PropTypes.string.isRequired,
+    playlistTracks: PropTypes.array.isRequired
 };
