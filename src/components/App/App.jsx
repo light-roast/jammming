@@ -50,6 +50,12 @@ function App() {
       }
   ])
 
+  function addTrack(track) {
+    if (!(playlistTracks.some(obj => obj.id === track.id))) {
+      setPlaylistTracks([...playlistTracks, track]);
+    }
+  }
+
   return (
     <>
       <div>
@@ -57,7 +63,7 @@ function App() {
           <div className="App">
             <SearchBar/>
             <div className="App-playlist">
-              <SearchResults searchResults={searchResults}/>
+              <SearchResults searchResults={searchResults} onAdd={addTrack}/>
               <Playlist playlistName={playlistName} playlistTracks={playlistTracks}/>
             </div>
           </div>
