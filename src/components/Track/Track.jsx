@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 export default function Track(props) {
     function renderAction() {
         if (props.isRemoval) {
-            return <button className="TrackAction">-</button>
+            return <button className="Track-action">-</button>
         } else  {
-            return <button className="TrackAction">+</button>
+            return <button className="Track-action">+</button>
         }
     }
 
