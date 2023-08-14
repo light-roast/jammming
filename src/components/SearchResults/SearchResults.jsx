@@ -1,5 +1,6 @@
 import TrackList from '../TrackList/TrackList.jsx'
 import './SearchResults.css'
+import PropTypes from 'prop-types'
 
 export default function SearchResults({searchResults}) {
     return (
@@ -9,3 +10,7 @@ export default function SearchResults({searchResults}) {
         </div>
     )
 }
+
+SearchResults.propTypes = {
+    searchResults: PropTypes.array.isRequired
+};
