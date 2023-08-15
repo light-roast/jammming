@@ -72,12 +72,18 @@ function App() {
     const tracksUris = playlistTracks.map(track => track.uri);
   }
 
+  function search(term) {
+    console.log(term);
+  }
+
   return (
     <>
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
           <div className="App">
-            <SearchBar/>
+            <SearchBar
+              onSearch={search}
+            />
             <div className="App-playlist">
               <SearchResults searchResults={searchResults} 
                               onAdd={addTrack}
