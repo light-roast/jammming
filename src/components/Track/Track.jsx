@@ -6,8 +6,12 @@ export default function Track(props) {
         if (props.isRemoval) {
             return <button className="Track-action">-</button>
         } else  {
-            return <button className="Track-action">+</button>
+            return <button className="Track-action" onClick={addTrack}>+</button>
         }
+    }
+
+    function addTrack() {
+        props.onAdd(props.track)
     }
 
 return (
