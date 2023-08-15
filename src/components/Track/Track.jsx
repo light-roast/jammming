@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default function Track(props) {
     function renderAction() {
         if (props.isRemoval) {
-            return <button className="Track-action">-</button>
+            return <button className="Track-action" onClick={removeTrack}>-</button>
         } else  {
             return <button className="Track-action" onClick={addTrack}>+</button>
         }
@@ -12,6 +12,10 @@ export default function Track(props) {
 
     function addTrack() {
         props.onAdd(props.track)
+    }
+
+    function removeTrack() {
+        props.onRemove(props.track)
     }
 
 return (
@@ -31,5 +35,6 @@ Track.propTypes = {
     artist: PropTypes.string.isRequired,
     album: PropTypes.string.isRequired,
     isRemoval: PropTypes.bool.isRequired,
-    onAdd: PropTypes.func.isRequired
+    onAdd: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired
 };

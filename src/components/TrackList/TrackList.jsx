@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Track from '../Track/Track'
 
 
-export default function TrackList({tracks, onAdd}) {
+export default function TrackList({tracks, onAdd, onRemove, isRemoval}) {
     return (
         <div className="TrackList">
            {tracks?.map(result => {
@@ -12,7 +12,9 @@ export default function TrackList({tracks, onAdd}) {
                             artist={result.artist} 
                             album={result.album} 
                             key={result.id} 
-                            onAdd={onAdd} 
+                            onAdd={onAdd}
+                            onRemove={onRemove} 
+                            isRemoval={isRemoval}
                             />
            })}
         </div>
@@ -22,4 +24,6 @@ export default function TrackList({tracks, onAdd}) {
 TrackList.propTypes = {
    tracks: PropTypes.array.isRequired,
    onAdd: PropTypes.func.isRequired,
+   onRemove: PropTypes.func.isRequired,
+   isRemoval: PropTypes.bool.isRequired
 };
