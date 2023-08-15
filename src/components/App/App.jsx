@@ -64,6 +64,10 @@ function App() {
     }
   }
 
+  function updatePlaylistName(name) {
+    setPlaylistName(name);
+  }
+
   return (
     <>
       <div>
@@ -72,7 +76,7 @@ function App() {
             <SearchBar/>
             <div className="App-playlist">
               <SearchResults searchResults={searchResults} onAdd={addTrack}/>
-              <Playlist playlistName={playlistName} playlistTracks={playlistTracks} onRemove={removeTrack}/>
+              <Playlist onNameChange={updatePlaylistName} playlistName={playlistName} playlistTracks={playlistTracks} onRemove={removeTrack}/>
             </div>
           </div>
       </div>
