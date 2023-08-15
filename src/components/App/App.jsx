@@ -68,6 +68,10 @@ function App() {
     setPlaylistName(name);
   }
 
+  function savePlaylist() {
+    const tracksUris = playlistTracks.map(track => track.uri);
+  }
+
   return (
     <>
       <div>
@@ -75,8 +79,15 @@ function App() {
           <div className="App">
             <SearchBar/>
             <div className="App-playlist">
-              <SearchResults searchResults={searchResults} onAdd={addTrack}/>
-              <Playlist onNameChange={updatePlaylistName} playlistName={playlistName} playlistTracks={playlistTracks} onRemove={removeTrack}/>
+              <SearchResults searchResults={searchResults} 
+                              onAdd={addTrack}
+                              />
+              <Playlist onSave={savePlaylist}
+                        onNameChange={updatePlaylistName} 
+                        playlistName={playlistName} 
+                        playlistTracks={playlistTracks} 
+                        onRemove={removeTrack}
+                        />
             </div>
           </div>
       </div>
