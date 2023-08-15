@@ -26,8 +26,10 @@ return (
 }
 
 Track.propTypes = {
+    track: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,
     album: PropTypes.string.isRequired,
-    isRemoval: PropTypes.bool.isRequired
+    isRemoval: PropTypes.bool.isRequired,
+    onAdd: PropTypes.func.isRequired
 };

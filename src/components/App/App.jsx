@@ -56,6 +56,14 @@ function App() {
     }
   }
 
+  function removeTrack(track) {
+    if (playlistTracks.some(obj => obj.id === track.id)) {
+      const filterPlaylist = playlistTracks.filter(track => 
+        currentTrack.id !== track.id)
+      setPlaylistTracks(filterPlaylist);
+    }
+  }
+
   return (
     <>
       <div>

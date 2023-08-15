@@ -20,5 +20,6 @@ export default function TrackList({tracks, onAdd}) {
 }
 
 TrackList.propTypes = {
-   tracks: PropTypes.array.isRequired
+   tracks: PropTypes.array.isRequired,
+   onAdd: PropTypes.func.isRequired,
 };

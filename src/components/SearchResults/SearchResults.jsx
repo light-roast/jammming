@@ -12,5 +12,6 @@ export default function SearchResults({searchResults, onAdd}) {
 }
 
 SearchResults.propTypes = {
-    searchResults: PropTypes.array.isRequired
+    searchResults: PropTypes.array.isRequired,
+    onAdd: PropTypes.func.isRequired
 };
