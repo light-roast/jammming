@@ -9,7 +9,7 @@ export default function SearchBar({onSearch}) {
         onSearch(term);
     }
     function handleTermSearch(e) {
-        setTerm(e.event.target)
+        setTerm(e.target.value)
     }
     return (
         <div className="SearchBar">
