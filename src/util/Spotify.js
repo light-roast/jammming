@@ -1,3 +1,6 @@
+const clientID =import.meta.env.VITE_API_KEY;
+const redirectUri = 'http://127.0.0.1:5173/';
+
 let accessToken;
 const Spotify = {
     getAccessToken() {
