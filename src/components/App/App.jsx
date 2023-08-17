@@ -74,7 +74,9 @@ function App() {
   }
 
   function search(term) {
-    Spotify.search(term);
+    Spotify.search(term).then(results => {
+      setSearchResults(results);
+    });
   }
 
   return (
