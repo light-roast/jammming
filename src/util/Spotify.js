@@ -49,6 +49,29 @@ const Spotify = {
             console.error('Failed to fetch data from Spotify API:', err);
             throw new Error('Failed to fetch data from Spotify API');
           }
+    },
+
+    async savePLaylist(name, trackUris){
+        if (!name || !trackUris.length) {
+            return
+        }
+        const accessToken = this.getAccessToken();
+        const options = {
+            headers: {'Authorization': `Bearer ${accessToken}`}
+        };
+        let userId;
+        try {
+            const response = await fetch(`https://api.spotify.com/v1/me`, options);
+            const data = await response.json();
+            
+            if (data.id) {
+              userId = data.id;
+            } 
+            
+          } catch (err) {
+            console.error('Failed to fetch data from Spotify API:', err);
+            throw new Error('Failed to fetch data from Spotify API');
+          }
     }
 }
 
