@@ -14,7 +14,7 @@ export default function SearchBar({onSearch}) {
     return (
         <div className="SearchBar">
             <input onChange={handleTermSearch} placeholder="Enter A Song, Album, or Artist" />
-            <button className="SearchButton">SEARCH</button>
+            <button className="SearchButton" onClick={search}>SEARCH</button>
         </div>
     )
 }

@@ -26,6 +26,7 @@ const Spotify = {
         const accessToken = this.getAccessToken;
         const options = {
             headers: {
+                'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${accessToken}`
             }};
         try {
@@ -57,16 +58,20 @@ const Spotify = {
         }
         const accessToken = this.getAccessToken();
         const options = {
-            headers: {'Authorization': `Bearer ${accessToken}`}
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': `Bearer ${accessToken}`}
         };
         const optionsP = {
-            headers: {'Authorization': `Bearer ${accessToken}`},
+            headers: {'Access-Control-Allow-Origin': '*',
+            'Authorization': `Bearer ${accessToken}`},
             method: 'POST',
             body: JSON.stringify({name: name})
         };
 
         const optionsPp = {
-            headers: {'Authorization': `Bearer ${accessToken}`},
+            headers: {'Access-Control-Allow-Origin': '*',
+            'Authorization': `Bearer ${accessToken}`},
             method: 'POST',
             body: JSON.stringify({uris: trackUris})
         }
@@ -84,8 +89,8 @@ const Spotify = {
             } 
 
           } catch (err) {
-            console.error('Failed to fetch data from Spotify API:', err);
-            throw new Error('Failed to fetch data from Spotify API');
+            console.error('Failed to post data to Spotify API:', err);
+            throw new Error('Failed to post data to Spotify API');
           }
     }
 }
