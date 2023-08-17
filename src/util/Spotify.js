@@ -16,7 +16,39 @@ const Spotify = {
             window.setTimeout(() => accessToken = '', expiresIn * 1000);
             window.history.pushState('Access Token', null, '/');
             return accessToken;
+        } else {
+            const url = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`
+            window.location = url;
         }
+    },
+
+    async search(term) {
+        const accessToken = this.getAccessToken;
+        const options = {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }};
+        try {
+            const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, options);
+            const data = await response.json();
+            
+            if (data.tracks) {
+              return data.tracks.items.map(track => {
+                return {
+                    id: track.id,
+                    name: track.name,
+                    artist: track.artist[0].name,
+                    album: track.album.name,
+                    uri: track.uri
+                }
+              });
+            } else {
+              return [];
+            }
+          } catch (err) {
+            console.error('Failed to fetch data from Spotify API:', err);
+            throw new Error('Failed to fetch data from Spotify API');
+          }
     }
 }
 

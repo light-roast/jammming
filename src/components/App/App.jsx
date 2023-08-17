@@ -3,6 +3,7 @@ import SearchBar from '../SearchBar/SearchBar.jsx'
 import SearchResults from '../SearchResults/SearchResults.jsx'
 import Playlist from '../Playlist/Playlist.jsx'
 import { useState } from 'react'
+import Spotify from '../../util/Spotify'
 
 function App() {
   const [searchResults, setSearchResults] = useState([
@@ -73,7 +74,7 @@ function App() {
   }
 
   function search(term) {
-    console.log(term);
+    Spotify.search(term);
   }
 
   return (
