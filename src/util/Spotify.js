@@ -59,6 +59,17 @@ const Spotify = {
         const options = {
             headers: {'Authorization': `Bearer ${accessToken}`}
         };
+        const optionsP = {
+            headers: {'Authorization': `Bearer ${accessToken}`},
+            method: 'POST',
+            body: JSON.stringify({name: name})
+        };
+
+        const optionsPp = {
+            headers: {'Authorization': `Bearer ${accessToken}`},
+            method: 'POST',
+            body: JSON.stringify({uris: trackUris})
+        }
         let userId;
         try {
             const response = await fetch(`https://api.spotify.com/v1/me`, options);
@@ -66,8 +77,12 @@ const Spotify = {
             
             if (data.id) {
               userId = data.id;
+              const responseP = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, optionsP);
+              const dataP = await responseP.json();
+              const playlistId = await dataP.id;
+              const responsePp = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`, optionsPp)
             } 
-            
+
           } catch (err) {
             console.error('Failed to fetch data from Spotify API:', err);
             throw new Error('Failed to fetch data from Spotify API');
