@@ -1,17 +1,33 @@
+
 import TrackList from '../TrackList/TrackList.jsx'
 import './Playlist.css'
 import PropTypes from 'prop-types'
 
 export default function Playlist({playlistName, playlistTracks, onRemove, onNameChange, onSave}) {
+    
+    
     function handleNameChange(e) {
         onNameChange(e.target.value);
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onNameChange('My Playlist');
+        onSave();
+      };
+    
     return(
         <div className="Playlist">
-            <input onChange={handleNameChange} defaultValue={playlistName}/>
-            <TrackList tracks={playlistTracks} onRemove={onRemove} isRemoval={true}/>
-            <button className="Playlist-save" onClick={onSave}>SAVE TO SPOTIFY</button>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={playlistName}
+            onChange={handleNameChange}
+          />
+          <TrackList tracks={playlistTracks} onRemove={onRemove} isRemoval={true} />
+          <button id="Playlist-save" type="submit">SAVE TO SPOTIFY</button>
+        </form>
+      </div>
     )
 }
 

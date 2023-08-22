@@ -23,7 +23,7 @@ export default function TrackList({tracks, onAdd, onRemove, isRemoval}) {
 
 TrackList.propTypes = {
    tracks: PropTypes.array.isRequired,
-   onAdd: PropTypes.func.isRequired,
-   onRemove: PropTypes.func.isRequired,
+   onAdd: PropTypes.func,
+   onRemove: PropTypes.func,
    isRemoval: PropTypes.bool.isRequired
 };
