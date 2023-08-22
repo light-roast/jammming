@@ -1,5 +1,21 @@
 const clientID =import.meta.env.VITE_API_KEY;
 const redirectUri = 'http://127.0.0.1:5173/';
+const scope = 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public';
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+  
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters.charAt(randomIndex);
+    }
+  
+    return result;
+  }
+const state = generateRandomString(16);
+const stateKey = "jammming_state"
+localStorage.setItem(stateKey, state);
+
 
 let accessToken;
 const Spotify = {
@@ -17,20 +33,25 @@ const Spotify = {
             window.history.pushState('Access Token', null, '/');
             return accessToken;
         } else {
-            const url = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`
+            let url = 'https://accounts.spotify.com/authorize';
+            url += '?response_type=token';
+            url += '&client_id=' + encodeURIComponent(clientID);
+            url += '&scope=' + encodeURIComponent(scope);
+            url += '&redirect_uri=' + encodeURIComponent(redirectUri);
+            url += '&state=' + encodeURIComponent(state);
             window.location = url;
         }
     },
 
     async search(term) {
-        const accessToken = this.getAccessToken;
+        const accessToken = this.getAccessToken();
         const options = {
             headers: {
-                'Access-Control-Allow-Origin': '*',
+                
                 'Authorization': `Bearer ${accessToken}`
             }};
         try {
-            const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, options);
+            const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(term)}`, options);
             const data = await response.json();
             
             if (data.tracks) {
@@ -38,7 +59,7 @@ const Spotify = {
                 return {
                     id: track.id,
                     name: track.name,
-                    artist: track.artist[0].name,
+                    artist: track.artists.length > 0 ? track.artists[0].name : 'Unknown Artist',
                     album: track.album.name,
                     uri: track.uri
                 }
@@ -52,7 +73,7 @@ const Spotify = {
           }
     },
 
-    async savePLaylist(name, trackUris){
+    async savePlaylist(name, trackUris){
         if (!name || !trackUris.length) {
             return
         }
@@ -63,29 +84,32 @@ const Spotify = {
                 'Authorization': `Bearer ${accessToken}`}
         };
         const optionsP = {
-            headers: {'Access-Control-Allow-Origin': '*',
+            headers: {
+            'Access-Control-Allow-Origin': '*',
             'Authorization': `Bearer ${accessToken}`},
             method: 'POST',
             body: JSON.stringify({name: name})
         };
 
         const optionsPp = {
-            headers: {'Access-Control-Allow-Origin': '*',
-            'Authorization': `Bearer ${accessToken}`},
+            headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': `Bearer ${accessToken}`
+        },
             method: 'POST',
             body: JSON.stringify({uris: trackUris})
         }
         let userId;
         try {
-            const response = await fetch(`https://api.spotify.com/v1/me`, options);
+            const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/me`, options);
             const data = await response.json();
             
             if (data.id) {
               userId = data.id;
-              const responseP = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, optionsP);
+              const responseP = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${userId}/playlists`, optionsP);
               const dataP = await responseP.json();
-              const playlistId = await dataP.id;
-              const responsePp = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`, optionsPp)
+              const playlistId = dataP.id;
+              const responsePp = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/playlists/${playlistId}/tracks`, optionsPp)
             } 
 
           } catch (err) {
