@@ -170,7 +170,38 @@ const Spotify = {
           console.error('Failed to fetch user playlists from Spotify API:', err);
           throw new Error('Failed to fetch user playlists from Spotify API');
       }
-  }
+  },
+
+  async getPlaylist(playlistId) {
+    const id = await this.getCurrentUserId();
+    const accessToken = this.getAccessToken();
+    const options = {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    };
+    try {
+        const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${id}/playlists/${playlistId}/tracks`, options);
+        const data = await response.json();
+
+        if (data.items) {
+            return data.items.map(track => {
+                return {
+                    trackId: track.track.id,
+                    name: track.track.name,
+                    artist: track.track.artists.length > 0 ? track.track.artists[0].name : 'Unknown Artist',
+                    album: track.track.album.name,
+                    uri: track.track.uri
+                };
+            });
+        } else {
+            return [];
+        }
+    } catch (err) {
+        console.error('Failed to fetch playlist tracks from Spotify API:', err);
+        throw new Error('Failed to fetch playlist tracks from Spotify API');
+    }
+}
 }
 
 export default Spotify;
