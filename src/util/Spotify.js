@@ -104,14 +104,12 @@ const Spotify = {
           }
     },
 
-    async savePlaylist(name, trackUris){
+    async savePlaylist(name, trackUris, idd){
         if (!name || !trackUris.length) {
             return
         }
         const accessToken = this.getAccessToken();
         const id = await this.getCurrentUserId();
-        
-        
         const optionsP = {
             headers: {
             'Access-Control-Allow-Origin': '*',
@@ -127,8 +125,21 @@ const Spotify = {
         },
             method: 'POST',
             body: JSON.stringify({uris: trackUris})
-        }
-        
+        };
+
+        if (id!==null) {
+                try {
+                await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${encodeURIComponent(id)}/playlists/${idd}`, optionsP);
+                await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/playlists/${idd}/tracks`, optionsPp)
+                
+            
+                
+              } catch (err) {
+                console.error('Failed to post data to Spotify API:', err);
+                throw new Error('Failed to post data to Spotify API');
+              }
+    
+        } else {
         try {
             const responseP = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${encodeURIComponent(id)}/playlists`, optionsP);
             const dataP = await responseP.json();
@@ -139,6 +150,7 @@ const Spotify = {
             console.error('Failed to post data to Spotify API:', err);
             throw new Error('Failed to post data to Spotify API');
           }
+        }
     },
 
     async getUserPlaylists() {

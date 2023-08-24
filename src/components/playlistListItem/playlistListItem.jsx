@@ -6,7 +6,7 @@ export default function PlaylistListItem({name, selectPlaylist, key}) {
 return (
     <div className="Track" onClick={selectPlaylist(key)}>
     <div className="Track-information">
-        <h3>{name}holi</h3>
+        <h3>{name}</h3>
     </div>
     </div>
 )

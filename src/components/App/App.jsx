@@ -10,6 +10,7 @@ function App() {
   const [playlistName, setPlaylistName] = useState('My Playlist');
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [userPlaylists, setUserPlaylists] = useState([]);
+  const [playlistId, setPlaylistId] = useState(null);
 
 
   function addTrack(track) {
@@ -32,7 +33,7 @@ function App() {
 
   function savePlaylist() {
     const tracksUris = playlistTracks.map(track => track.uri);
-    Spotify.savePlaylist(playlistName, tracksUris).then(() => {
+    Spotify.savePlaylist(playlistName, tracksUris, playlistId).then(() => {
       setPlaylistTracks([]);
       updatePlaylistName('My Playlist');    
       });
@@ -55,7 +56,8 @@ function App() {
   function selectPlaylist(id) {
     Spotify.getPlaylist(id).then(results => {
       setPlaylistName(results.playlistName);
-      setPlaylistTracks(results.tracks)
+      setPlaylistTracks(results.tracks);
+      setPlaylistId(id);
     })
   }
 
