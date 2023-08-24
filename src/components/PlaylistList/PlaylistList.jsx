@@ -1,10 +1,10 @@
-import TracklistListItem from '../playlistListItem/playlistListItem'
+import PlaylistListItem from '../PlaylistListItem/PlaylistListItem'
 import { useEffect } from 'react'
 import '../TrackList/TrackList.css'
 import PropTypes from 'prop-types'
 
 
-export default function PlaylistList({playlists, getPlaylists}) {
+export default function PlaylistList({playlists, getPlaylists, selectPlaylist}) {
     
     useEffect(() => {
         getPlaylists();
@@ -14,7 +14,7 @@ export default function PlaylistList({playlists, getPlaylists}) {
         <div className="TrackList">
             <h2 id="Sub">Local playlists:</h2>
            {playlists?.map(result => {
-            return <TracklistListItem key={result.playlistId} name={result.name}/>
+            return <PlaylistListItem key={result.playlistId} name={result.name} selectPlaylist={selectPlaylist}/>
            })}
         </div>
     )
@@ -22,6 +22,7 @@ export default function PlaylistList({playlists, getPlaylists}) {
 
 PlaylistList.propTypes = {
     playlists: PropTypes.array.isRequired,
-    getPlaylists: PropTypes.func.isRequired
+    getPlaylists: PropTypes.func.isRequired,
+    selectPlaylist: PropTypes.func.isRequired
     
 };

@@ -52,6 +52,13 @@ function App() {
     });
   }
 
+  function selectPlaylist(id) {
+    Spotify.getPlaylist(id).then(results => {
+      setPlaylistName(results.playlistName);
+      setPlaylistTracks(results.tracks)
+    })
+  }
+
   return (
     <>
       <div>
@@ -71,6 +78,7 @@ function App() {
                         onRemove={removeTrack}
                         getPlaylists={getPlaylists}
                         playlists={userPlaylists}
+                        selectPlaylist={selectPlaylist}
                         />
             </div>
           </div>
