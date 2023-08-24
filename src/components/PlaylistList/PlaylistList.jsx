@@ -12,10 +12,16 @@ export default function PlaylistList({playlists, getPlaylists}) {
     
     return (
         <div className="TrackList">
-            <h1>Your playlists</h1>
+            <h2 id="Sub">Local playlists:</h2>
            {playlists?.map(result => {
             return <TracklistListItem key={result.playlistId} name={result.name}/>
            })}
         </div>
     )
 }
+
+PlaylistList.propTypes = {
+    playlists: PropTypes.array.isRequired,
+    getPlaylists: PropTypes.func.isRequired
+    
+};

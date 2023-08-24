@@ -39,5 +39,6 @@ Playlist.propTypes = {
     onRemove: PropTypes.func.isRequired,
     onNameChange: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    getPlaylists: PropTypes.func.isRequired
+    getPlaylists: PropTypes.func.isRequired,
+    playlists: PropTypes.array.isRequired,
 };
