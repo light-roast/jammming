@@ -1,4 +1,4 @@
-const clientID =import.meta.env.VITE_API_KEY;
+const clientID = import.meta.env.VITE_API_KEY;
 const redirectUri = 'http://127.0.0.1:5173/';
 const scope = 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public';
 function generateRandomString(length) {
@@ -18,6 +18,8 @@ localStorage.setItem(stateKey, state);
 
 
 let accessToken;
+let userId;
+
 const Spotify = {
     getAccessToken() {
         if (accessToken) {
@@ -43,11 +45,40 @@ const Spotify = {
         }
     },
 
+    async getCurrentUserId() {
+      if (userId) {
+          return Promise.resolve(userId); 
+      } else {
+          const accessToken = this.getAccessToken();
+          const options = {
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+                  'Authorization': `Bearer ${accessToken}`
+              }
+          };
+          try {
+              const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/me`, options);
+              const data = await response.json();
+  
+              if (data.id) {
+                  userId = data.id;
+                  return userId;
+              } else {
+                  throw new Error('Failed to retrieve user ID from Spotify API');
+              }
+          } catch (err) {
+              console.error('Failed to retrieve user ID from Spotify API:', err);
+              throw new Error('Failed to retrieve user ID from Spotify API');
+          }
+      }
+  },
+
     async search(term) {
         const accessToken = this.getAccessToken();
+        console.log(accessToken);
         const options = {
             headers: {
-                
+                'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${accessToken}`
             }};
         try {
@@ -78,11 +109,9 @@ const Spotify = {
             return
         }
         const accessToken = this.getAccessToken();
-        const options = {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': `Bearer ${accessToken}`}
-        };
+        const id = await this.getCurrentUserId();
+        
+        
         const optionsP = {
             headers: {
             'Access-Control-Allow-Origin': '*',
@@ -99,19 +128,13 @@ const Spotify = {
             method: 'POST',
             body: JSON.stringify({uris: trackUris})
         }
-        let userId;
+        
         try {
-            const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/me`, options);
-            const data = await response.json();
+            const responseP = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${encodeURIComponent(id)}/playlists`, optionsP);
+            const dataP = await responseP.json();
+            const playlistId = dataP.id;
+            const responsePp = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/playlists/${playlistId}/tracks`, optionsPp)
             
-            if (data.id) {
-              userId = data.id;
-              const responseP = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${userId}/playlists`, optionsP);
-              const dataP = await responseP.json();
-              const playlistId = dataP.id;
-              const responsePp = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/playlists/${playlistId}/tracks`, optionsPp)
-            } 
-
           } catch (err) {
             console.error('Failed to post data to Spotify API:', err);
             throw new Error('Failed to post data to Spotify API');

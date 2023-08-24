@@ -2,7 +2,7 @@ import './App.css'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import SearchResults from '../SearchResults/SearchResults.jsx'
 import Playlist from '../Playlist/Playlist.jsx'
-import { useEffect, useState } from 'react'
+import {useState} from 'react'
 import Spotify from '../../util/Spotify'
 
 function App() {
