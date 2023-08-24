@@ -1,5 +1,5 @@
 const clientID = import.meta.env.VITE_API_KEY;
-const redirectUri = 'http://127.0.0.1:5173/';
+const redirectUri = 'http://127.0.0.1:5174/';
 const scope = 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public';
 function generateRandomString(length) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

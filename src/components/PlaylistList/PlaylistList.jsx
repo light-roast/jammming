@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import '../TrackList/TrackList.css'
 import PropTypes from 'prop-types'
-import PlaylistListItem from '../playlistListItem/playlistListItem'
+import PlaylistListItem from '../PlaylistListItem/PlaylistListItem'
 
 
 export default function PlaylistList({playlists, getPlaylists, selectPlaylist}) {
