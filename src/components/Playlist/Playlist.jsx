@@ -1,9 +1,10 @@
 
 import TrackList from '../TrackList/TrackList.jsx'
+import PlaylistList from '../PlaylistList/PlaylistList.jsx'
 import './Playlist.css'
 import PropTypes from 'prop-types'
 
-export default function Playlist({playlistName, playlistTracks, onRemove, onNameChange, onSave}) {
+export default function Playlist({playlistName, playlistTracks, onRemove, onNameChange, onSave, getPlaylists, playlists}) {
     
     
     function handleNameChange(e) {
@@ -27,6 +28,7 @@ export default function Playlist({playlistName, playlistTracks, onRemove, onName
           <TrackList tracks={playlistTracks} onRemove={onRemove} isRemoval={true} />
           <button id="Playlist-save" type="submit">SAVE TO SPOTIFY</button>
         </form>
+          <PlaylistList getPlaylists={getPlaylists} playlists={playlists} />
       </div>
     )
 }
@@ -36,5 +38,6 @@ Playlist.propTypes = {
     playlistTracks: PropTypes.array.isRequired,
     onRemove: PropTypes.func.isRequired,
     onNameChange: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired
+    onSave: PropTypes.func.isRequired,
+    getPlaylists: PropTypes.func.isRequired
 };

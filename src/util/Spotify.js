@@ -75,7 +75,7 @@ const Spotify = {
 
     async search(term) {
         const accessToken = this.getAccessToken();
-        console.log(accessToken);
+        
         const options = {
             headers: {
                 'Access-Control-Allow-Origin': '*',
@@ -139,7 +139,38 @@ const Spotify = {
             console.error('Failed to post data to Spotify API:', err);
             throw new Error('Failed to post data to Spotify API');
           }
-    }
+    },
+
+    async getUserPlaylists() {
+      const id = await this.getCurrentUserId(); 
+      const accessToken = this.getAccessToken();
+      const options = {
+          headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Authorization': `Bearer ${accessToken}`
+          }
+      };
+  
+      try {
+          const response = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${encodeURIComponent(id)}/playlists`, options);
+          const data = await response.json();
+  
+          if (data.items) {
+              const playlists = data.items.map(playlist => {
+                  return {
+                      playlistId: playlist.id,
+                      name: playlist.name
+                  };
+              });
+              return playlists;
+          } else {
+              return [];
+          }
+      } catch (err) {
+          console.error('Failed to fetch user playlists from Spotify API:', err);
+          throw new Error('Failed to fetch user playlists from Spotify API');
+      }
+  }
 }
 
 export default Spotify;

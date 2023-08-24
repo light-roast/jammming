@@ -7,8 +7,9 @@ import Spotify from '../../util/Spotify'
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
-  const [playlistName, setPlaylistName] = useState('My Playlist')
-  const [playlistTracks, setPlaylistTracks] = useState([])
+  const [playlistName, setPlaylistName] = useState('My Playlist');
+  const [playlistTracks, setPlaylistTracks] = useState([]);
+  const [userPlaylists, setUserPlaylists] = useState([]);
 
 
   function addTrack(track) {
@@ -45,6 +46,12 @@ function App() {
     });
   }
 
+  function getPlaylists() {
+    Spotify.getUserPlaylists().then(results => {
+      setUserPlaylists(results);
+    });
+  }
+
   return (
     <>
       <div>
@@ -62,6 +69,8 @@ function App() {
                         playlistName={playlistName} 
                         playlistTracks={playlistTracks} 
                         onRemove={removeTrack}
+                        getPlaylists={getPlaylists}
+                        playlists={userPlaylists}
                         />
             </div>
           </div>
