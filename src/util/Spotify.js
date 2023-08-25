@@ -1,5 +1,5 @@
 const clientID = import.meta.env.VITE_API_KEY;
-const redirectUri = 'http://127.0.0.1:5174/';
+const redirectUri = 'http://127.0.0.1:5173/';
 const scope = 'user-read-private user-read-email playlist-read-private playlist-modify-private playlist-modify-public';
 function generateRandomString(length) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -53,7 +53,7 @@ const Spotify = {
           const options = {
               headers: {
                 'Access-Control-Allow-Origin': '*',
-                  'Authorization': `Bearer ${accessToken}`
+                'Authorization': `Bearer ${accessToken}`
               }
           };
           try {
@@ -106,6 +106,7 @@ const Spotify = {
 
     async savePlaylist(name, trackUris, idd){
         if (!name || !trackUris.length) {
+            alert('Cannot update or create an empty or nameless playlist');
             return
         }
         const accessToken = this.getAccessToken();
@@ -127,7 +128,7 @@ const Spotify = {
             body: JSON.stringify({uris: trackUris})
         };
 
-        if (id!==null) {
+        if (idd!==null) {
                 try {
                 await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${encodeURIComponent(id)}/playlists/${idd}`, optionsP);
                 await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/playlists/${idd}/tracks`, optionsPp)
@@ -196,13 +197,12 @@ const Spotify = {
     try {
         const playlistResponse = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${id}/playlists/${playlistId}`, options);
         const playlistData = await playlistResponse.json();
-        
         const tracksResponse = await fetch(`https://cors-anywhere.herokuapp.com/https://api.spotify.com/v1/users/${id}/playlists/${playlistId}/tracks`, options);
         const tracksData = await tracksResponse.json();
 
         const tracks = tracksData.items.map(track => {
             return {
-                trackId: track.track.id,
+                id: track.track.id,
                 name: track.track.name,
                 artist: track.track.artists.length > 0 ? track.track.artists[0].name : 'Unknown Artist',
                 album: track.track.album.name,

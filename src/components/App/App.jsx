@@ -2,7 +2,7 @@ import './App.css'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import SearchResults from '../SearchResults/SearchResults.jsx'
 import Playlist from '../Playlist/Playlist.jsx'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import Spotify from '../../util/Spotify'
 
 function App() {
@@ -12,6 +12,13 @@ function App() {
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [playlistId, setPlaylistId] = useState(null);
 
+  useEffect(() => {
+    getPlaylists();
+  }, [playlistId]);
+
+  useEffect(() => {
+    getPlaylists();
+  }, [])
 
   function addTrack(track) {
     if (!(playlistTracks.some(obj => obj.id === track.id))) {
@@ -35,7 +42,8 @@ function App() {
     const tracksUris = playlistTracks.map(track => track.uri);
     Spotify.savePlaylist(playlistName, tracksUris, playlistId).then(() => {
       setPlaylistTracks([]);
-      updatePlaylistName('My Playlist');    
+      updatePlaylistName('My Playlist'); 
+      setPlaylistId(null);   
       });
       
   }
