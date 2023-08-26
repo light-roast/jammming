@@ -1,10 +1,9 @@
-import { useEffect } from 'react'
 import '../TrackList/TrackList.css'
 import PropTypes from 'prop-types'
 import PlaylistListItem from '../playlistListItem/playlistListItem'
 
 
-export default function PlaylistList({playlists, getPlaylists, selectPlaylist}) {
+export default function PlaylistList({playlists, selectPlaylist}) {
     
     
     return (
@@ -19,7 +18,6 @@ export default function PlaylistList({playlists, getPlaylists, selectPlaylist}) 
 
 PlaylistList.propTypes = {
     playlists: PropTypes.array.isRequired,
-    getPlaylists: PropTypes.func.isRequired,
     selectPlaylist: PropTypes.func.isRequired
     
 };

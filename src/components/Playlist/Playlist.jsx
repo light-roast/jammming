@@ -5,8 +5,7 @@ import './Playlist.css'
 import PropTypes from 'prop-types'
 
 export default function Playlist({playlistName, playlistTracks, onRemove, 
-  onNameChange, onSave, getPlaylists, 
-  playlists, selectPlaylist}) {
+  onNameChange, onSave, playlists, selectPlaylist, getPlaylists}) {
     
     
     function handleNameChange(e) {
@@ -15,8 +14,9 @@ export default function Playlist({playlistName, playlistTracks, onRemove,
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onNameChange('My Playlist');
         onSave();
+        getPlaylists();
+        onNameChange('My Playlist');
       };
     
     return(
@@ -30,7 +30,7 @@ export default function Playlist({playlistName, playlistTracks, onRemove,
           <TrackList tracks={playlistTracks} onRemove={onRemove} isRemoval={true} />
           <button id="Playlist-save" type="submit">SAVE TO SPOTIFY</button>
         </form>
-          <PlaylistList getPlaylists={getPlaylists} playlists={playlists} selectPlaylist={selectPlaylist}/>
+          <PlaylistList  playlists={playlists} selectPlaylist={selectPlaylist}/>
       </div>
     )
 }
@@ -41,7 +41,7 @@ Playlist.propTypes = {
     onRemove: PropTypes.func.isRequired,
     onNameChange: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    getPlaylists: PropTypes.func.isRequired,
     selectPlaylist: PropTypes.func.isRequired,
-    playlists: PropTypes.array.isRequired
+    playlists: PropTypes.array.isRequired,
+    getPlaylists: PropTypes.func.isRequired
 };

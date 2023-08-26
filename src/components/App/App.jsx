@@ -14,10 +14,6 @@ function App() {
 
   useEffect(() => {
     getPlaylists();
-  }, [playlistId]);
-
-  useEffect(() => {
-    getPlaylists();
   }, [])
 
   function addTrack(track) {
@@ -89,6 +85,7 @@ function App() {
                         getPlaylists={getPlaylists}
                         playlists={userPlaylists}
                         selectPlaylist={selectPlaylist}
+                        
                         />
             </div>
           </div>
