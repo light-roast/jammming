@@ -199,7 +199,7 @@ const Spotify = {
                   };
               });
               return playlists;
-              console.log(playlists);
+              
           } else {
               return [];
           }
